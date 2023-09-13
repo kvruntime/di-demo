@@ -1,5 +1,8 @@
 # DI-DEMO
 
+## Purpose
+
+throw this, we test how use 'simple-injection' with pyqt gui application
 
 ## Packages
 

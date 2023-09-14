@@ -1,26 +1,30 @@
 import sys
+
+from PyQt6.QtWidgets import *
+
 from di_builder import di
-
-from pages import HomePage
-from PyQt6.QtWidgets import QApplication
+from pages import HomePage, UserPage
 from services import DataService
-
-from viewmodels import HomeViewModel
-
-di.add_singleton(HomePage)
+from viewmodels import HomeViewModel, UserViewModel
 
 
 class Application(QApplication):
     def __init__(self) -> None:
         super().__init__([])
-        self.page = di.resolve(HomePage)
+        self.tabPage = QTabWidget()
+        self.tabPage.setMinimumSize(400, 400)
+        self.tabPage.addTab(di.resolve(HomePage), "HomePage")
+        self.tabPage.addTab(di.resolve(UserPage), "UserPage")
         return
 
-
     def run(self) -> None:
-        self.page.show()
+        self.tabPage.show()
         sys.exit(self.exec())
 
 
-
+di.add_transient(DataService)
+di.add_singleton(HomePage)
+di.add_singleton(UserPage)
+di.add_singleton(HomeViewModel)
+di.add_singleton(UserViewModel)
 di.add_singleton(Application)

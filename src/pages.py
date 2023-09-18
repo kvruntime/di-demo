@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import *
+from form import SomeForm
 
-from viewmodels import HomeViewModel, UserViewModel
+from viewmodels import FormViewModel, HomeViewModel, UserViewModel
 
 
 class HomePage(QWidget):
@@ -39,15 +40,25 @@ class UserPage(QWidget):
 
         self.label = QLabel("Service")
         self.buttonCaller = QPushButton("Caller")
+        self.buttonOpenDialog = QPushButton("Open Dialog")
 
         layout.addWidget(QLabel("UserPage"))
         layout.addWidget(self.label)
         layout.addWidget(self.buttonCaller)
+        layout.addWidget(self.buttonOpenDialog)
 
         self.initializeBinding()
         return
 
     def initializeBinding(self) -> None:
+        # self.buttonCaller.clicked.connect(self.vm.command_operation)
         self.buttonCaller.clicked.connect(self.vm.command_operation)
+        self.buttonOpenDialog.clicked.connect(self.command_open)
         self.label.setText(f"Data: {self.vm.sdata}")
+        return None
+
+    def command_open(self) -> None:
+        from di_builder import di
+        self.dlg=SomeForm(di.resolve(FormViewModel), self)
+        self.dlg.exec()
         return None

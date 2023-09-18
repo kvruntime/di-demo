@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import *
-from form import SomeForm
 
+from form import SomeForm
 from viewmodels import FormViewModel, HomeViewModel, UserViewModel
 
 
@@ -59,6 +59,7 @@ class UserPage(QWidget):
 
     def command_open(self) -> None:
         from di_builder import di
-        self.dlg=SomeForm(di.resolve(FormViewModel), self)
+
+        self.dlg = SomeForm(di.resolve(FormViewModel), self)
         self.dlg.exec()
         return None
